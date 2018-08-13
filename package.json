@@ -1,0 +1,28 @@
+{
+  "name": "local-repository",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build-server": "tslint -p . && tsc",
+    "watch-server": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts --exec 'ts-node' src/server/server.ts",
+    "start": "node dist/server/server.js"
+  },
+  "dependencies": {
+    "fast-json-patch": "2.0.6",
+    "koa": "2.5.1",
+    "koa-bodyparser": "4.2.0",
+    "koa-json-log": "2.0.2",
+    "koa-router": "7.4.0"
+  },
+  "devDependencies": {
+    "@types/koa": "2.0.45",
+    "@types/koa-bodyparser": "4.2.0",
+    "@types/koa-router": "7.0.28",
+    "@types/node": "8.10.10",
+    "cross-env": "5.1.4",
+    "nodemon": "1.17.3",
+    "ts-node": "6.0.1",
+    "tslint": "5.9.1",
+    "typescript": "2.8.3"
+  }
+}
