@@ -12,6 +12,8 @@ const localRepoPrefix = "localcluster"
 export function PodCreate(ctx: KoaRouter.IRouterContext) {
     var admissionRequest = ctx.request.body;
 
+    console.log(JSON.stringify(ctx.request.body))
+
     var podOriginal: Kubernetes.Pod = admissionRequest.request.object;
 
     console.log(`validating the ${podOriginal.metadata.name} pod`);

@@ -6,6 +6,14 @@
         "rootDir": "./src",
         "outDir": "./dist",
         "experimentalDecorators": true,
-        "strictPropertyInitialization": false
-    }
+        "strictPropertyInitialization": false,
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules",
+        "bin",
+        ".vscode",
+        "typings/browser.d.ts",
+        "typings/browser/**"
+    ]
 }
