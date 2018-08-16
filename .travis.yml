@@ -1,9 +1,8 @@
-language: node_js
-
-node_js:
-  - "10"
-  - "9"
-  - "8"
+language: generic
+sudo: required
+services:
+- docker
 
 before_script:
-  - make build
+  - make docker
+  - make docker-test

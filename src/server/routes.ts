@@ -7,7 +7,10 @@ export function registerRoutes(app: Koa) {
 
     const router = new KoaRouter();
 
-    router.post("/pod", PodCreate)
+    router.post("/pod", PodCreate);
+    router.get("/healthz", (ctx) => {
+        ctx.body = "Alive!"
+    });
 
     app.use(router.routes());
     app.use(router.allowedMethods());

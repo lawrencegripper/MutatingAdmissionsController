@@ -1,1 +1,6 @@
 .vscode
+node_modules
+kubernetes
+dist
+Makefile
+*.MD
