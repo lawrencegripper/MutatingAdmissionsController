@@ -10,7 +10,7 @@ webhooks:
     # service: 
     #   name: local-repository-controller-service
     #   namespace: default
-    url:  https://ad8659da.ngrok.io/pod
+    url:  https://1eafed28.ngrok.io/pod
   failurePolicy: Fail
   name: ad8659da.ngrok.io
   namespaceSelector: {}
