@@ -29,7 +29,3 @@ It receives the request it does the following:
 3.  Creates a JSONPatch by comparing the original and the clone
 4.  Base64 Encodes the JSONPatch data
 5.  Returns the patch as part of an `admissionResponse` object
-
-Todo:
-
-- [ ] CI

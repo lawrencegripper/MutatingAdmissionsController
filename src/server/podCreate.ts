@@ -12,15 +12,12 @@ const localRepoPrefix = "cluster.local"
 export function PodCreate(ctx: KoaRouter.IRouterContext) {
     var admissionRequest: Kubernetes.AdmissionReview<Kubernetes.Pod> = ctx.request.body;
 
-    console.log(JSON.stringify(ctx.request.body))
-
     var podOriginal: Kubernetes.Pod = admissionRequest.request.object
 
     var podClone: Kubernetes.Pod = JSON.parse(JSON.stringify(podOriginal))
+
     podClone.spec.containers.forEach(container => {
-        if (container.image.startsWith(localRepoPrefix)) {
-            container.image = container.image.replace(localRepoPrefix, config.rewriteContainerRepository)
-        }
+        updateImageNameForContainer(container);
     });
 
     var admissionResponse: Kubernetes.AdmissionResponse = {
@@ -42,4 +39,10 @@ export function PodCreate(ctx: KoaRouter.IRouterContext) {
     };
 
     ctx.body = admissionReview
+}
+
+function updateImageNameForContainer(container: Kubernetes.Container) {
+    if (container.image.startsWith(localRepoPrefix)) {
+        container.image = container.image.replace(localRepoPrefix, config.rewriteContainerRepository);
+    }
 }
