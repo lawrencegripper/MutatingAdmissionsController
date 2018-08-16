@@ -1,5 +1,7 @@
 # Image Repository Mutating Admission Controller
 
+[![Build Status](https://travis-ci.com/lawrencegripper/MutatingAdmissionsController.svg?branch=master)](https://travis-ci.com/lawrencegripper/MutatingAdmissionsController)
+
 ## Status: WIP
 
 This controller will rewrite pods run to Kuberentes with an image repository location of `cluster.local/someimage` to a repository local to the cluster (in the sample it's `rewritten.local/someimage`). 
