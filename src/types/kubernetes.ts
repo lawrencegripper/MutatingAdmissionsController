@@ -12,7 +12,7 @@ export module Kubernetes {
     export interface Metadata {
         creationTimestamp: Date;
         generateName: string;
-        labels:  any;
+        labels: any;
         name: string;
         namespace: string;
         ownerReferences: OwnerReference[];
@@ -107,6 +107,50 @@ export module Kubernetes {
         metadata: Metadata;
         spec: Spec;
         status: Status;
+    }
+
+
+    export interface Kind {
+        group: string;
+        version: string;
+        kind: string;
+    }
+
+    export interface Resource {
+        group: string;
+        version: string;
+        resource: string;
+    }
+
+    export interface UserInfo {
+        username: string;
+        groups: string[];
+    }
+
+    export interface AdmissionReviewRequest<T> {
+        uid: string;
+        kind: Kind;
+        resource: Resource;
+        namespace: string;
+        operation: string;
+        userInfo: UserInfo;
+        object: T;
+        oldObject?: any;
+    }
+
+
+
+    export interface AdmissionReview<T> {
+        kind: string;
+        apiVersion: string;
+        request: AdmissionReviewRequest<T>;
+    }
+
+    export interface AdmissionResponse {
+        uid: string;
+        allowed: boolean;
+        patchType?: string;
+        patch?: string;
     }
 
 }

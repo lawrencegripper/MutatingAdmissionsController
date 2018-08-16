@@ -5,7 +5,8 @@
   "scripts": {
     "build-server": "tslint -p . && tsc",
     "watch-server": "cross-env NODE_ENV=development nodemon --watch 'src/**/*' -e ts --exec 'ts-node' src/server/server.ts",
-    "start": "node dist/server/server.js"
+    "start": "node dist/server/server.js",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts"
   },
   "dependencies": {
     "fast-json-patch": "2.0.6",
@@ -15,11 +16,15 @@
     "koa-router": "7.4.0"
   },
   "devDependencies": {
+    "@types/chai": "4.1.4",
     "@types/koa": "2.0.45",
     "@types/koa-bodyparser": "4.2.0",
     "@types/koa-router": "7.0.28",
+    "@types/mocha": "5.2.5",
     "@types/node": "8.10.10",
+    "chai": "4.1.2",
     "cross-env": "5.1.4",
+    "mocha": "5.2.0",
     "nodemon": "1.17.3",
     "ts-node": "6.0.1",
     "tslint": "5.9.1",

@@ -16,6 +16,10 @@ Lets start our webhook receiver locally.
 4. Update the `k8s-ngrok.yaml` file's `url` property with your ngrok endpoint 
 5. `k apply -f k8s-ngrok.yaml` then run `k apply -f testpod.yaml` and see the webhook hit your service and patch the image location
 
+## Testing
+
+Run `npm test`
+
 ## What happens in the receiver?
 
 It receives the request it does the following:
@@ -28,6 +32,4 @@ It receives the request it does the following:
 
 Todo:
 
-- [ ] Docs
-- [ ] Tests
 - [ ] CI

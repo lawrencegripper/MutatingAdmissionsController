@@ -1,0 +1,8 @@
+{
+    "response": {
+        "uid": "d13b5bef-a13d-11e8-b1d5-42010a9a029b",
+        "allowed": true,
+        "patchType": "JSONPatch",
+        "patch": "W3sib3AiOiJyZXBsYWNlIiwicGF0aCI6Ii9zcGVjL2NvbnRhaW5lcnMvMC9pbWFnZSIsInZhbHVlIjoicmV3cml0dGVuLmxvY2FsL25naW54In1d"
+    }
+}
