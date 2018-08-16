@@ -14,14 +14,14 @@ export function PodCreate(ctx: KoaRouter.IRouterContext) {
 
     console.log(JSON.stringify(ctx.request.body))
 
-    var podOriginal: Kubernetes.Pod = admissionRequest.request.object;
+    var podOriginal: Kubernetes.Pod = admissionRequest.request.object
 
     console.log(`validating the ${podOriginal.metadata.name} pod`);
 
-    var podClone = JSON.parse(JSON.stringify(podOriginal))
-    podOriginal.spec.containers.forEach(container => {
+    var podClone: Kubernetes.Pod = JSON.parse(JSON.stringify(podOriginal))
+    podClone.spec.containers.forEach(container => {
         if (container.image.startsWith(localRepoPrefix)) {
-            container.image.replace(localRepoPrefix, config.rewriteContainerRepository)
+            container.image = container.image.replace(localRepoPrefix, config.rewriteContainerRepository)
         }
     });
 
@@ -31,7 +31,7 @@ export function PodCreate(ctx: KoaRouter.IRouterContext) {
     var admissionResponse = {
         allowed: true,
         patchType: "JSONPatch",
-        patch: patch
+        patch: patch[0]
     };
 
     var admissionReview = {
