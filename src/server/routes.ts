@@ -1,13 +1,13 @@
 
 import * as Koa from 'koa';
 import * as KoaRouter from 'koa-router';
-import { PodCreate } from './podCreate';
+import { objectCreate } from './objectCreate';
 
 export function registerRoutes(app: Koa) {
 
     const router = new KoaRouter();
 
-    router.post("/pod", PodCreate);
+    router.post("/objectCreate", objectCreate);
     router.get("/healthz", (ctx) => {
         ctx.body = "Alive!"
     });

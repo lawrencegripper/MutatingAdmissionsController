@@ -1,5 +1,5 @@
 
-import { PodCreate } from '../server/podCreate';
+import { objectCreate } from '../server/objectCreate';
 import * as KoaRouter from 'koa-router';
 import { expect } from 'chai';
 import 'mocha';
@@ -21,8 +21,7 @@ describe('PodCreate', () => {
     it('shouldMutatePodImage', async () => {
         var context = newMockContext()
         context.request.body = JSON.parse(fs.readFileSync('./src/tests/data/podCreateMutate.json', 'utf8'));
-        console.log(context.body);
-        const response = await PodCreate(context)
+        const response = await objectCreate(context)
 
         const expectedResponse = JSON.parse(fs.readFileSync('./src/tests/data/podCreateMutate_response.json', 'utf8'));
         expect(context.body).to.deep.equal(expectedResponse);
@@ -31,11 +30,9 @@ describe('PodCreate', () => {
     it('shouldNOTMutatePodImage', async () => {
         var context = newMockContext()
         context.request.body = JSON.parse(fs.readFileSync('./src/tests/data/podCreateIgnore.json', 'utf8'));
-        console.log(context.body);
-        const response = await PodCreate(context)
+        const response = await objectCreate(context)
 
         const expectedResponse = JSON.parse(fs.readFileSync('./src/tests/data/podCreateIgnore_response.json', 'utf8'));
         expect(context.body).to.deep.equal(expectedResponse);
     });
-
 });

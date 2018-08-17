@@ -1,3 +1,5 @@
+// This modules provides TS interfaces for the Kubernetes objects
+// sent/received by the webhooks
 export module Kubernetes {
 
     export interface OwnerReference {
@@ -151,6 +153,54 @@ export module Kubernetes {
         allowed: boolean;
         patchType?: string;
         patch?: string;
+    }
+
+    export interface Template {
+        metadata: Metadata;
+        spec: Spec;
+    }
+
+    export interface Selector {
+        matchLabels: any;
+    }
+
+    export interface Strategy {
+        type: string;
+    }
+
+    export interface DeploymentSpec {
+        progressDeadlineSeconds: number;
+        replicas: number;
+        revisionHistoryLimit: number;
+        selector: Selector;
+        strategy: Strategy;
+        template: Template;
+    }
+
+    export interface Condition {
+        lastTransitionTime: Date;
+        lastUpdateTime: Date;
+        message: string;
+        reason: string;
+        status: string;
+        type: string;
+    }
+
+    export interface Status {
+        availableReplicas: number;
+        conditions: Condition[];
+        observedGeneration: number;
+        readyReplicas: number;
+        replicas: number;
+        updatedReplicas: number;
+    }
+
+    export interface Deployment {
+        apiVersion: string;
+        kind: string;
+        metadata: Metadata;
+        spec: DeploymentSpec;
+        status: Status;
     }
 
 }
