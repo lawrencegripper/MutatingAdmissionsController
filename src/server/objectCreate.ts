@@ -24,12 +24,6 @@ export function objectCreate(ctx: KoaRouter.IRouterContext) {
     };
 
     switch (admissionRequest.request.kind.kind) {
-        case "Pod": {
-            (objectClone as Kubernetes.Pod).spec.containers.forEach(container => {
-                updateImageNameForContainer(container);
-            });
-            break;
-        }
         case "Deployment": {
             (objectClone as Kubernetes.Deployment).spec.template.spec.containers.forEach(container => {
                 updateImageNameForContainer(container);

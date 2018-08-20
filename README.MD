@@ -14,9 +14,9 @@ Lets start our webhook receiver locally.
 
 1. `ngrok http 3000`
 2. `​git clone https://github.com/lawrencegripper/ClusterLocalAdmissionsController` and CD into the dir
-3. `npm install && npm watch-server`
-4. Update the `./kubernetes/k8s-ngrok.yaml` file's `url` property with your ngrok endpoint 
-5. `k apply -f ./kubernetes/k8s-ngrok.yaml` then run `k apply -f ./kubernetes/testpod.yaml` and see the webhook hit your service and patch the image location
+3. `npm install && npm run watch-server`
+4. Update the `./kubernetes/k8s-ngrok.yaml` file's `url` property with your ngrok https endpoint 
+5. `k apply -f ./kubernetes/k8s-ngrok.yaml` then run `k apply -f ./kubernetes/testdep.yaml` and see the webhook hit your service and patch the image location
 
 ## Testing
 

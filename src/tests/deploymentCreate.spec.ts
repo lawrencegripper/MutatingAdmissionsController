@@ -26,4 +26,22 @@ describe('DeploymentCreate', () => {
         const expectedResponse = JSON.parse(fs.readFileSync('./src/tests/data/deploymentCreateMutate_response.json', 'utf8'));
         expect(context.body).to.deep.equal(expectedResponse);
     });
+
+    it('shouldNotMutatePodImage', async () => {
+      var context = newMockContext()
+      context.request.body = JSON.parse(fs.readFileSync('./src/tests/data/deploymentCreateDontMutate.json', 'utf8'));
+      const response = await objectCreate(context)
+
+      const expectedResponse = JSON.parse(fs.readFileSync('./src/tests/data/deploymentCreateDontMutate_response.json', 'utf8'));
+      expect(context.body).to.deep.equal(expectedResponse);
+  });
+
+    it('shouldIgnoreUnsupportedObjectType', async () => {
+      var context = newMockContext()
+      context.request.body = JSON.parse(fs.readFileSync('./src/tests/data/podCreateMutate.json', 'utf8'));
+      
+      await objectCreate(context)
+
+      expect(context.body.allowed).to.equal(true);
+  });
 });
