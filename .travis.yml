@@ -6,3 +6,10 @@ services:
 before_script:
   - make docker
   - make docker-test
+
+
+deploy:
+  provider: script
+  script: bash docker_push
+  on:
+    branch: master

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DOCKER_REPO=gripper/imageNameMutatingController
+
+docker tag mutatingcontroller $DOCKER_REPO:$TRAVIS_BUILD_NUMBER
+docker tag mutatingcontroller $DOCKER_REPO:latest
+
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+docker push $DOCKER_REPO:$TRAVIS_BUILD_NUMBER
+docker push $DOCKER_REPO:latest
