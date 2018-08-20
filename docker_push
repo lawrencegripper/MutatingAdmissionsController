@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_REPO=gripper/imageNameMutatingController
+DOCKER_REPO=$DOCKER_FOLDER/imageNameMutatingController
 
 docker tag mutatingcontroller $DOCKER_REPO:$TRAVIS_BUILD_NUMBER
 docker tag mutatingcontroller $DOCKER_REPO:latest

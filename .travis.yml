@@ -13,3 +13,7 @@ deploy:
   script: bash docker_push
   on:
     branch: master
+
+env:
+  global:
+  - DOCKER_FOLDER=lawrencegripper
