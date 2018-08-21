@@ -1,52 +1,127 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: imagenamemutatingcontroller-configmap
+  namespace: kube-system
+data:
+  default.conf: |-
+    server {
+            listen 443 ssl;
+
+            server_name localhost;
+            ssl_certificate /etc/nginx/ssl/tls.crt;
+            ssl_certificate_key /etc/nginx/ssl/tls.key;
+
+            location / {
+                    proxy_pass http://127.0.0.1:3000;
+            }
+    }
+---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: imagenamemutatingcontroller-secret
+#   namespace: kube-system
+# type: kubernetes.io/tls
+# data:
+#   tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUIrekNDQWFtZ0F3SUJBZ0lRQ0NRNHhQT0x4eFBSSHhobUlLRzloekFLQmdncWhrak9QUVFEQWpCYk1Sc3cKR1FZRFZRUUtFeEpCUTAxRklFVjRZVzF3YkdWekxDQkpibU14UERBNkJnTlZCQU1UTTJsdFlXZGxibUZ0WlcxMQpkR0YwYVc1blkyOXVkSEp2Ykd4bGNpMXpaWEoyYVdObExtdDFZbVV0YzNsemRHVnRMbk4yWXpBZUZ3MHhPREE0Ck1qRXhNVFE0TURCYUZ3MHhPREE0TWpFeU16UTRNREJhTUZzeEd6QVpCZ05WQkFvVEVrRkRUVVVnUlhoaGJYQnMKWlhNc0lFbHVZekU4TURvR0ExVUVBeE16YVcxaFoyVnVZVzFsYlhWMFlYUnBibWRqYjI1MGNtOXNiR1Z5TFhObApjblpwWTJVdWEzVmlaUzF6ZVhOMFpXMHVjM1pqTUU0d0VBWUhLb1pJemowQ0FRWUZLNEVFQUNFRE9nQUV0VXc2Cngxb21GSGtDc283VnVmNFB0THlPSFRSakIyejVwKy9ndXROWlhpTmlFT1NnYThKRWt0VHBDQ05LNXZBSWI3NkwKdVlpby9EK2pXakJZTUE0R0ExVWREd0VCL3dRRUF3SUZvREFUQmdOVkhTVUVEREFLQmdnckJnRUZCUWNEQVRBTQpCZ05WSFJNQkFmOEVBakFBTUNNR0ExVWRFUVFjTUJxQ0MyVjRZVzF3YkdVdVkyOXRnZ3RsZUdGdGNHeGxMbTVsCmREQUtCZ2dxaGtqT1BRUURBZ05BQURBOUFoMEF5RmZPUTkvWXdSVUpRMXVqOHIydkYwZEtKb2lXdnljOHBZWUQKZlFJY2RIeFdtVEF0b2NFSTZwWlR0TFhDdUFTMkNNSEF0MjgxNHRrZzNBPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+#   tls.key: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1HZ0NBUUVFSEtkQ092ckNxWXRJOTRDaVVEejR5eFlMck5reGduUGNCdXBuMTBLZ0J3WUZLNEVFQUNHaFBBTTYKQUFTMVREckhXaVlVZVFLeWp0VzUvZyswdkk0ZE5HTUhiUG1uNytDNjAxbGVJMklRNUtCcndrU1MxT2tJSTBybQo4QWh2dm91NWlLajhQdz09Ci0tLS0tRU5EIEVDIFBSSVZBVEUgS0VZLS0tLS0KVUM0amdSU09haW96WThXCjFrYkRMZFcvNm1KK2t3enhVSGsyZkFGNVg5U0RoOGlyVzl4RGxQd0prMFVLYjBoUlNUVFlvS2xVbE1uM2lOdHoKazQxU0dhbW0vZEpRdVFMNnJUV2F3WU9LWGlTMHNldC9ud2ZTeXRxeFduUUdKSHFDcitCSmRKTFlqcVZtem5tVwovKzZRTmRoUmVrK09kNXVVRlBEeWFrNFJlN0ZFcGUxVTBGbjh1ckZRK1B2M3BUa2JLVmxySlpGdVRmdm9EbnpqCnFoczZka2psQWdNQkFBRUNnZ0VBVFRKRlVaSVlRSk90Z1NHaXlHY0U1UlY0RVl2aHJoQmZlMy9VTEpMQTlhTmwKZCtqMVhScGs4RFFYSENtMXhITlptaE1KUnJLeHpYczh5MWZkMTJEODk5ZDBFZW9VYnpmN3J6Nnk0OUFnZWgraQpuTSt3WmQyWXg1a2hlTnlJUDBScWxvTFpZMXJCb0ZOOXNFcUViTStMRndWVkxvQlRVb2U0eUdBZDAzSFBFU2s1CldxOHoxMElZbDNoVjZGYUNhNWFSWmhEVktLS2hkaFkzZmMvYjNhcHZHaE5oQmxhMVpCem42YVhGNGF3akxjZVQKY2p2SXBBU2xGOVUrWUU1NmN3U1Y4elI2cHQveVMrT2VuSWhJampiWUZiazdiWXYvdDBPRkp6Y3ozZURENW1EYgpRTTROd0lYcThIRWtQZWliNzhQTm5MeERoNlNtQ3JTcVIrS1lFaUM0MlFLQmdRRDcwdVhmcVZrTis2UE9YUlJRCi94Q3lZY1RMRi9MQVVaZ0pEeWFnSDlzbkM1WU5JbjhncnpteHltTnMyek9FQkpNRE1KS0V4SEtwbHI5TWhISWoKeFVSeW12NlNKU1dPSi85Wk82cWF1WGtYa1UyNjY0ckJqYjN5MXd6cGhjbmViL3U0MXlWdzVMRmd0Q3JWODUwbgprMWpnVm1zWDRjOGJtRHJVOWdoSnZmbjdLd0tCZ1FEdnJ0MkM3cFQ2dEtsMnovSzc3bG84bDg2NjdmZVp1ODBECkhYN3IxNFhSL0MyVnhlTVZHNkdRdzN5UWJXNHd6b2l3eVpzZHVQcmNJWGxSU3JZeCtnK1QzR010cjRtMzFETjYKVzJUcldQT2ExRmd2R2JXK0Y4UmphUHFlOTZIZERhS0d2Z2NmL1h2SHlyQXI1Wk5GMmk4aW9MSXJESFVyTWFpWgppS1ROS0syRUx3S0JnUUNJRE4zeW8xeWdxRlpNZEk4NFgwVlhDbWsyekY1ek51SHI2d3FVTWdIRnE0WEszTnRQCi9qc3VhY2lqbEIzVjhsNjJ0M1JCVkowYU1INXp5WTZjOHNQVEl4ZnNQek4yQlBmNDdycHlVMGd2eW1uelZiUW0KYy95dWlTN0pyMlZyenBaeHU1TFgxa1phbDV3WThUL3psTERNcXdPNjZGMXJiQ2hFekJPWU81SWw5d0tCZ0ExcQpLQk92N3I2cFplSzBlTTF6NWJFR2ZoZVFRZzlrcDNESk1kVlpWckFPQVM4a3lEVGlPd1N6TEVHWkhsVzArWW1MCmZ4Y0d4Mk9TckF1VXR1WE5MUm9GZDdlUzM0NWVYaE0zRWtycHk1aWEwZVN3OTY4UC9Ybmk0a1FMY0EvRE41bDcKQVVNVkdOeHh4N0p0UXZUaDVVbDIzUUh6eklzQ1dJRmZXSG56RU9NWkFvR0FlZHRyeHVCbnROL0tIeHFLVjg1bgpQYkRBY3hpd0drU1ovVDlFaUNPQThMam1DMmhOTmtpdktxanFrb2hoNGVxU0IxRE9KblUxakZiZWlYa0JaZnpOCm1KN1lzblZuZkwwZEh2L1lyVzlqN2V5M3E2cW5icVhOeGhJVUVGaU9MNmRKUGo2b2JiTlpxUVMydjJEQjlBQXgKNE83L2FET09PWlhFNEVOUHpVemdQQms9Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
+# ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: local-repository-controller-deployment
+  name: imagenamemutatingcontroller
+  namespace: kube-system
   labels:
-    app: local-repository-controller
+    app: imagenamemutatingcontroller
+    mutateimagename: never
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: local-repository-controller
+      app: imagenamemutatingcontroller
   template:
     metadata:
       labels:
-        app: local-repository-controller
+        app: imagenamemutatingcontroller
     spec:
+      initContainers:
+        - name: certificate-init-container
+          image: gcr.io/hightowerlabs/certificate-init-container:0.0.1
+          imagePullPolicy: Always
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          args:
+            - "-additional-dnsnames=imagenamemutatingcontroller-service.kube-system.svc"
+            - "-cert-dir=/etc/tls"
+            - "-namespace=$(NAMESPACE)"
+            - "-pod-ip=$(POD_IP)"
+            - "-pod-name=$(POD_NAME)"
+            - "-service-names=imagenamemutatingcontroller-service"            
+          volumeMounts:
+            - name: tls
+              mountPath: /etc/tls
       containers:
-      - name: controller
-        image: lawrencegripper/local-repository
+      - name: nginxhttps
+        image: library/nginx:1.15
         ports:
         - containerPort: 443
           name: https
+        volumeMounts:
+        - mountPath: /etc/nginx/ssl
+          name: tls
+        - mountPath: /etc/nginx/conf.d
+          name: configmap-volume
+      - name: webhook
+        image: lawrencegripper/imagenamemutatingcontroller:12
+      volumes:
+      - name: tls
+      - name: configmap-volume
+        configMap:
+          name: imagenamemutatingcontroller-configmap
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: local-repository-controller-service
-  namespace: default
+  name: imagenamemutatingcontroller-service
+  namespace: kube-system
 spec:
   ports:
   - protocol: TCP
-    port: 80
+    port: 443
     targetPort: https
   selector:
-    app: local-repository-controller
-  type: LoadBalancer
+    app: imagenamemutatingcontroller
+  type: ClusterIP
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: local-repository-controller-webhook
+  name: imagenamemutatingcontroller
 webhooks:
 - clientConfig:
-    # ngrok public cabundle
-    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tDQpNSUlGcXpDQ0JKT2dBd0lCQWdJUURITW1IVnRRYmdwZGRocWhDUllpbVRBTkJna3Foa2lHOXcwQkFRc0ZBREJlDQpNUXN3Q1FZRFZRUUdFd0pWVXpFVk1CTUdBMVVFQ2hNTVJHbG5hVU5sY25RZ1NXNWpNUmt3RndZRFZRUUxFeEIzDQpkM2N1WkdsbmFXTmxjblF1WTI5dE1SMHdHd1lEVlFRREV4UlNZWEJwWkZOVFRDQlNVMEVnUTBFZ01qQXhPREFlDQpGdzB4T0RBek1USXdNREF3TURCYUZ3MHhPVEF6TVRJeE1qQXdNREJhTUJVeEV6QVJCZ05WQkFNTUNpb3VibWR5DQpiMnN1YVc4d2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURwSDlJbDZrUU05Y3JPDQpaaVJxeTJQUlg4Y2VZY3IwODdLL2l4L3I1SFNKZ2p4TUN3OXM2RTBEQ3lsMGNla0h1TmwvN2FvT0YrQ2NKbktkDQo4aEtQVThwVXVsUjJNdTE0NGY2V1Vkb29wcFYrUTY0V0pyc0w2M0xnVy9kaVJNRmZLOWppU3BTa2VWdmIwRFNTDQpEQnE4UTlNZ2theklrZUhGM1JadGEzUjZCOG5SWFVZNW1uU2pjY1hja2pUQlJLRE9hblNhOSt3cXF1MG45QzF5DQpFVVdzbTNibktQMFI2RDdZNU0zRXNsdG5XN3ZRTEhPSndialQzVC9BM00vSnk0dGJKanVSNUhHTm9ydG1XVS84DQpTRXZ0KzRTbi84MHhhNUlkL3NrblZmd0ZlU3ZITzVscEQzVXZuY1UyajNoeUpqK05jYnUyQUxvRGFiMlFuVjZGDQpaUTErQ1YybkFnTUJBQUdqZ2dLc01JSUNxREFmQmdOVkhTTUVHREFXZ0JSVHloZFovR3ZBQXlFdkdxN2txcWdjDQpnbGJhZFRBZEJnTlZIUTRFRmdRVXJibTJzUXpoK1NmSGVCOEd0Y1RHOE9xS091c3dId1lEVlIwUkJCZ3dGb0lLDQpLaTV1WjNKdmF5NXBiNElJYm1keWIyc3VhVzh3RGdZRFZSMFBBUUgvQkFRREFnV2dNQjBHQTFVZEpRUVdNQlFHDQpDQ3NHQVFVRkJ3TUJCZ2dyQmdFRkJRY0RBakErQmdOVkhSOEVOekExTURPZ01hQXZoaTFvZEhSd09pOHZZMlJ3DQpMbkpoY0dsa2MzTnNMbU52YlM5U1lYQnBaRk5UVEZKVFFVTkJNakF4T0M1amNtd3dUQVlEVlIwZ0JFVXdRekEzDQpCZ2xnaGtnQmh2MXNBUUl3S2pBb0JnZ3JCZ0VGQlFjQ0FSWWNhSFIwY0hNNkx5OTNkM2N1WkdsbmFXTmxjblF1DQpZMjl0TDBOUVV6QUlCZ1puZ1F3QkFnRXdkUVlJS3dZQkJRVUhBUUVFYVRCbk1DWUdDQ3NHQVFVRkJ6QUJoaHBvDQpkSFJ3T2k4dmMzUmhkSFZ6TG5KaGNHbGtjM05zTG1OdmJUQTlCZ2dyQmdFRkJRY3dBb1l4YUhSMGNEb3ZMMk5oDQpZMlZ5ZEhNdWNtRndhV1J6YzJ3dVkyOXRMMUpoY0dsa1UxTk1VbE5CUTBFeU1ERTRMbU55ZERBSkJnTlZIUk1FDQpBakFBTUlJQkJBWUtLd1lCQkFIV2VRSUVBZ1NCOVFTQjhnRHdBSFlBdTluZnZCK0tjYldUbENPWHFwSjdSemhYDQpsUXFyVXVnYWtKWmtObzRlMFlVQUFBRmlIRWtybVFBQUJBTUFSekJGQWlCZFRxNXZrdHJqRzZDWjltK24yRFk3DQptVEdndWJNVWpESHBFY1hJMHgzSU53SWhBTVFnZ0VpT3JGUlh0WHc4VnlZZzRlNVpGUjJhbnRCakdnWE5tWXJCDQp2K24xQUhZQWIxTjJyREh3TVJuWW1RQ2tVUlgvZHhVY0Vka0N3UUFwQm8yeUNKbzMyUk1BQUFGaUhFa3IvZ0FBDQpCQU1BUnpCRkFpRUExUTRVNmVyQ3pPWVJ1OW55UFh6MnFWY2RnL3BwVVdPREVyNWNTbEdJeVJ3Q0lIM2o0ZWMzDQpDbXROaitaN0l1T3R3YjZwMmNPSGlrRHBvNDFWTmlvM3pBcm1NQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUE1DQpCM25FZE5iU3huYmVrTUtHeFo3QlFoTi9uVVRiN0QraVMxMnIxK3BUL0VqdzhUUmEzdWVEWjdWcnNxU3AzaE1tDQpXMmYwMjJkanpocnhFSGkyYWJGb0VUS0Q1dUFSR1F2dDVML2h2bEhmZGtyZVMxSWZxK2YyUVllcU9zcVJlUUxHDQpOUTR6ekRXS1gxeTRBNGpQSi9uQ0diNk16UnlIUytHemhKMU50YnozNDJhQ2IxWER6aXBNSVpZUXhZTDFISjVTDQo5VzRYOGg2c2w4NDJXTmVvajBtYU10ZmVpajhURGlnUnJBUFE5anRYK29lOG1mdG4zOVVyK1ZvRC9FaTl3cWhMDQo1Rlh2WGR3MWxmT0RLNEpzd2JtTzdXMExwNzJnMDBHY3k5a1h1MUpoVkQvVDFFamh0NW92YjdIQ1VWYXkzT0plDQpKUE5Pemh6eTUzUzUzS0hiN0gvSQ0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ0K
-    url:  https://7a489acb.ngrok.io/objectCreate
+    service:
+      namespace: kube-system
+      name: imagenamemutatingcontroller-service
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUV5RENDQXJDZ0F3SUJBZ0lSQUlnSG8zd3VpZXgvcVJ0K2pwTlBTOTB3RFFZSktvWklodmNOQVFFTEJRQXcKRFRFTE1Ba0dBMVVFQXhNQ1kyRXdIaGNOTVRnd09ESXdNRGd3TVRNd1doY05NakF3T0RFNU1EZ3dNVE13V2pBTgpNUXN3Q1FZRFZRUURFd0pqWVRDQ0FpSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnSVBBRENDQWdvQ2dnSUJBSmt6CkhlMWoyRHJzS09WSHdPaHI4MFRaRlZDU3owZXU3c3hMKzJNVlVwMTVJM0hHQUVkVUlyYzI5QnY0bHhqMWN6d1EKT25EVmxWSXBvWUhGdmJ4TUovWjEvZXRhTkFsSHdiV1V4YlYwaXd1N0dCcVpPT1FOYUpTc29Td2xVUEJYeXYvegpCUjFpRS9LbVRQYnhQa3ZqMUVMT0tmOGQwcFlqc2lNUGc4bXhKWVpVVjRxdldhSVdoSnowYUFBVzF3ODZJT3QxCnlmRVl4Qko0dVNTT0JnaDdBZ0gzRURibEVvWVF1RlN2bDVnd0xudHhoMTArS0pPWGo5NEZ6Ukl3VWVBYnUvS1oKMyttUzhPdDAwK09hSXRpSmR1cHpOSS9FNVByRjgrbDhaNTVwd0hRdDFQcEZGVFh4SEpJU0h3UVZpQjlHV3U5ZwpDdkxKdHU5RUV4Rzg3YnEvMkhCSHZlZFUrT1N6M1VNRXM5YlNVcFdiUFZkZkUyN2lkdkxNWTRSZGtQWEdOQ1kxCmRRQWFkRitVenEyVE9QWlU2cyswM3o2Q21NQUhMNFdQSHNzT2R1ZWVCSDA4Ukg2eDd0aldXOGNpYmpQRUJ5bW0Kckk4cWh6cTFVdnVYa21weUFhaE9RclIzb0ZmM2JOYVovb2MvQTI0cVNuWXVUbU1NSTk1WXlPT1I3dlltck5IZQp0b09ob2cyZ2RLL0ptQkFBbVZYTEdVQzBKYzJCWWdTRUdVcmRrUXp3SGYydVJYM280QTVyVUs1N092REo5azR6Ci8vK3pjUmRtQzlGMmdHVUE1SThNSVUyS3Rjb295MmVlMTkvZ3lscTBtOUFyaldRenpGUElHeU81SWM1UEZPcEcKV0FhaDk1a2V2Mjdhb0JJbSs3cXg5ckgrNnd3L1VzU1ByRjRrZHA0RkFnTUJBQUdqSXpBaE1BNEdBMVVkRHdFQgovd1FFQXdJQ3BEQVBCZ05WSFJNQkFmOEVCVEFEQVFIL01BMEdDU3FHU0liM0RRRUJDd1VBQTRJQ0FRQ1laL3k0CmlHd2lUUkpyeGxUY3VKQVByWjc0SllvVFgzeWlzUmRUcWlDQ0tEa0FaNU00WjlCbDZPU3Q1U0xzc1FkZUhMdXYKc1pCM2NWazdhajgzMzdnZjM3MTFuK3M2bXBaQnBneFJhSUcxWitoa3V0RDNSK1c2bEZ1MUo3U2pPMkZFYk4zSgoxeEdBZHNjRVhQWUYrZ0VYaSszZ3R4K2FvdjI0bnF0eURkT0dOWm42KzN3U3J0bzdJR0x0QUx6cUFwSWdkNko4CnVWeUtsOUo3eHZaMjVwUERFOUZqTzVBNFVGU1VTTmJyTmtmaERtQVhYN0RBTGprQ242VmwzYW5IbEFWQ0Q4Y1MKdGZSTlZwelJYR1hrM2QxV1lGRVAyeWJjb0dEN0xKMDQ0NnZrejU3UjhVUGFkclE4ZTMxaW1IMlVHYWF1UFN2VApLUXU0UjZSM3cyY2NmWFFzTDBWSXhCZGtPU1pCVUhhSzRmODRjbUFvY00vUGc1NFA5WkY0bkxFMmIrenBKMUNBCk5hMDAwb0xLNnplRWhMenQ0dVBQQ1MzYlB4QkNhaTVBTDZTVnRmdTEvOHFkVWx0dUtBQk51aFhockF3d1g2c3oKeFA2ZHhCTFVJRFRyNnNmbjdEUDNOT1NQUGdjdmZHM3pEZmluUlBseXRuUkNXTnFvY0xmYXhtKzJsVDlBclFJNQo2UUdKaytsOVVGSEVBb0tqK1Z1YUJ0T2xPeUd2S0ZKMWQ2SXlLQ2luQnFMZU1CbC9OK0M2VVRERTF4dGRYQlI0CkNnTFZPL3lIa2JoMXZCYWdzTGNRaUd3ZXRoZzRFY0tVbk14V1pVWndLVVhIZ3hicmZ4NVNsU0srd25wMjFnWCsKaEx3b1ZYOUVselNUNmlyUTZHUjNPd2Njc3N1eW1UN3RJY3YvWUE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
   failurePolicy: Fail
-  name: 1eafed28.ngrok.io
-  namespaceSelector: {}
+  name: imagenamemutatingcontroller-service.kube-system.svc
+  namespaceSelector:
+    matchExpressions:
+      - key: mutateimagename
+        operator: NotIn
+        values: [never]
   rules:
   - apiGroups:
     - apps
@@ -55,7 +130,7 @@ webhooks:
     - v1
     operations:
     - CREATE
+    - UPDATE
     resources:
     - deployments
-    - pods
 
