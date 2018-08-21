@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+
+echo "Starting docker_push script"
 
 DOCKER_REPO=$DOCKER_FOLDER/imageNameMutatingController
 
