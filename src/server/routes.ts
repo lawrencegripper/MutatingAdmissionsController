@@ -7,7 +7,7 @@ export function registerRoutes(app: Koa) {
 
     const router = new KoaRouter();
 
-    router.post("/objectCreate", objectCreate);
+    router.post("/", objectCreate);
     router.get("/healthz", (ctx) => {
         ctx.body = "Alive!"
     });
