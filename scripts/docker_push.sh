@@ -3,7 +3,7 @@ set -e
 
 echo "Starting docker_push script"
 
-DOCKER_REPO=$DOCKER_FOLDER/imageNameMutatingController
+DOCKER_REPO=$DOCKER_FOLDER/imagenamemutatingcontroller
 
 docker tag mutatingcontroller $DOCKER_REPO:$TRAVIS_BUILD_NUMBER
 docker tag mutatingcontroller $DOCKER_REPO:latest
