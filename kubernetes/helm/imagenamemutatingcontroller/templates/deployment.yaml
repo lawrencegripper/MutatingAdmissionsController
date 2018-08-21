@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "imagenamemutatingcontroller.fullname" . }}
+  namespace: kube-system
+  labels:
+    app: {{ template "imagenamemutatingcontroller.name" . }}
+    chart: {{ template "imagenamemutatingcontroller.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    mutateimagename: never
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "imagenamemutatingcontroller.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "imagenamemutatingcontroller.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      initContainers:
+        - name: certificate-init-container
+          image: gcr.io/hightowerlabs/certificate-init-container:0.0.1
+          imagePullPolicy: Always
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          args:
+            - "-additional-dnsnames={{ template "imagenamemutatingcontroller.fullname" . }}-service.kube-system.svc"
+            - "-cert-dir=/etc/tls"
+            - "-namespace=$(NAMESPACE)"
+            - "-pod-ip=$(POD_IP)"
+            - "-pod-name=$(POD_NAME)"
+            - "-service-names={{ template "imagenamemutatingcontroller.fullname" . }}-service"            
+          volumeMounts:
+            - name: tls
+              mountPath: /etc/tls
+      containers:
+      - name: nginxhttps
+        image: library/nginx:1.15
+        ports:
+        - containerPort: 443
+          name: https
+        volumeMounts:
+        - mountPath: /etc/nginx/ssl
+          name: tls
+        - mountPath: /etc/nginx/conf.d
+          name: configmap-volume
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: https
+            scheme: HTTPS
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: https
+            scheme: HTTPS
+      - name: webhook
+        image: lawrencegripper/imagenamemutatingcontroller:12
+      volumes:
+      - name: tls
+      - name: configmap-volume
+        configMap:
+          name: {{ template "imagenamemutatingcontroller.fullname" . }}-configmap

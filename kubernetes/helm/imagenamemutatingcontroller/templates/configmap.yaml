@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "imagenamemutatingcontroller.fullname" . }}-configmap
+  namespace: kube-system
+  chart: {{ template "imagenamemutatingcontroller.chart" . }}
+  release: {{ .Release.Name }}
+  heritage: {{ .Release.Service }}
+data:
+  default.conf: |-
+    server {
+            listen 443 ssl;
+
+            server_name localhost;
+            ssl_certificate /etc/nginx/ssl/tls.crt;
+            ssl_certificate_key /etc/nginx/ssl/tls.key;
+
+            location / {
+                    proxy_pass http://127.0.0.1:3000;
+            }
+    }
