@@ -20,6 +20,7 @@ deploy:
     file: registry-rewriter-*.tgz
     on:
       repo: lawrencegripper/MutatingAdmissionsController
+      branch: master
 
 env:
   global:
