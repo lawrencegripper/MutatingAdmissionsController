@@ -6,13 +6,20 @@ services:
 before_script:
   - make docker
   - make docker-test
-
+  - make helm-package
 
 deploy:
-  provider: script
-  script: bash ./scripts/docker_push.sh
-  on:
-    branch: master
+  - provider: script
+    script: bash ./scripts/docker_push.sh
+    on:
+      branch: master
+  - provider: releases
+    api_key:
+      secure: R6KQaEd/fg6aJ6/STp2l1+1L8085JiHEFZUd14gi6SBCAXVk0+jMVCH77UD02wEILYsUf9zLt0dI6ebeqabpm9QSugzRoFMyJ8G578C84pdzI6sKcMU2wVI4oJeNCRMbSMFcPeqNl3VnNgZ+tU34q5R8okG6ZHSap6ueH8+Wa6L38IDGSrrlOcKaL+lCGZcJ2nplqE8raTKyzvEgRwDQulugFqQNZeCwsBt/MpY9HtKlLjb/dKWEA9di1k9A55CxFnwmsk8PP2IeC1KTTEULV4jQIYj1JMIKcCcrxERM7WYoGQLRF4bpNQElzklLcn10YHfDxUzSOXtDvwtCJRiyM10l3klEUH6yySoDcH4181cRW5ou8gZ4HMb+lVvyG/KPQIrQoHPX8kXD7I6YuxYxw1z69ac/naQoWp7Xc119OAA/SddGr7CHQ48/uZ+mlFOOebCi/FIiOb9H2xLKG77AYC/ms8JK+M9VkXB9S9I9gfKWbyKRW0Sfc4HVYHWayxRTQrmeQzoGj7ONjocImw1q6lqStbtxJs2bx4pn9itv5uQMsoDObVKNRPC9tDfzvGc6/dHEm8pd4EDG18VKvEjCO9dTgWR7PoD4njMOFGyljK8SQJGQ8JesOeMys0yXUa8cfmjKXske3XG+4olhRDqt74srPOAUiRgiJ1cPA4kEx6Y=
+    file_glob: true
+    file: registry-rewriter-*.tgz
+    on:
+      repo: lawrencegripper/MutatingAdmissionsController
 
 env:
   global:

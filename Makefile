@@ -14,3 +14,6 @@ docker-test:
 	docker ps | grep mutatingcontroller | awk '{print $$1}' | xargs docker kill
 
 .PHONY: build
+
+helm-package:
+  docker run -v ${PWD}:/src lachlanevenson/k8s-helm:v2.10.0 package /src/chart/registry-rewriter
