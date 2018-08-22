@@ -9,3 +9,5 @@ caBundle:
 # This is the url of the registry that you wish your cluster.local images to be pulled from.
 # If you specified scott.com it woudl re-write cluster.local/some/image to scott.com/some/image
 containerRegistryUrl: 
+
+webhookImage: lawrencegripper/imagenamemutatingcontroller:12

@@ -56,6 +56,8 @@ helm install <url of release> --name registry-rewiter --set containerRegistryUrl
 
 Once installed you run `k apply -f ./kubernetes/testdep.yaml` to test it has worked. If all is working you should receive
 
-```
+```bash
 deployment.apps/example-deployment configured
 ```
+
+You can also choose to deploy your own custom container image for the webhook by supplying the `webhookImage` value in the values.yaml.

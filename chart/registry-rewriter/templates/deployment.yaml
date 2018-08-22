@@ -43,7 +43,7 @@ spec:
             port: https
             scheme: HTTPS
       - name: webhook
-        image: lawrencegripper/imagenamemutatingcontroller:12
+        image: {{ .Values.webhookImage }}
         env:
           - name: REWRITE_CONTAINER_REPOSITORY
             value: {{ .Values.containerRegistryUrl }}
