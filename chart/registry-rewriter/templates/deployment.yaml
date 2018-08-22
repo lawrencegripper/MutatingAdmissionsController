@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "registry-rewriter.fullname" . }}
+  namespace: kube-system
+  labels:
+    app: {{ template "registry-rewriter.name" . }}
+    chart: {{ template "registry-rewriter.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    mutateimagename: never
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "registry-rewriter.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "registry-rewriter.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: nginxhttps
+        image: library/nginx:1.15
+        ports:
+        - containerPort: 443
+          name: https
+        volumeMounts:
+        - mountPath: /etc/nginx/ssl
+          name: tls
+        - mountPath: /etc/nginx/conf.d
+          name: configmap-volume
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: https
+            scheme: HTTPS
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: https
+            scheme: HTTPS
+      - name: webhook
+        image: {{ .Values.webhookImage }}
+        env:
+          - name: REWRITE_CONTAINER_REPOSITORY
+            value: {{ .Values.containerRegistryUrl }}
+      volumes:
+      - name: tls
+        secret:
+          secretName: {{ template "registry-rewriter.fullname" . }}
+      - name: configmap-volume
+        configMap:
+          name: {{ template "registry-rewriter.fullname" . }}-configmap
