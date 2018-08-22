@@ -32,43 +32,30 @@ It receives the request it does the following:
 4. Base64 Encodes the JSONPatch data
 5. Returns the patch as part of an `admissionResponse` object
 
-## Deploying into a cluster
+## Helm Chart
 
-To deploy into a cluster we have to do the following steps
+To deploy the registry rewriter into your cluster you can use the helm chart contained here. You will need the following properties
 
-1. Create a new deployment of the service that is available on https (This will need to include a secret and configmap)
-2. Create a new service to expose the deployment to the cluster
-3. Configure the webhook to point to the new service
+* CA Root certificate of the cluster this is being deployed into
+* URL of registry that should be used for cluster.local images
 
-An example of this can be found in `./kubernetes/k8s.yaml`
+> To get the root bundle you will need to run the following  
+> `kubectl get configmap -n kube-system extension-apiserver-authentication -o=jsonpath='{.data.client-ca-file}' | base64 | tr -d '\n'`
 
-Webhooks only work over HTTPs. To allow this the webhook deployment uses an init controller to create a CSR against the k8s API that is then issued to the service
+When installing this chart it will include a number of things
 
-Once the deployment has started you will need to approve the CSR from the command line use kubectl
+* A kubernetes job to create a CSR for the deployment and approve the CSR
+* A deployment and service for the webhook itself
+* A webhook configuration to tell kubernetes where the webhook is in you cluster
 
-To view the list of CSRs run the follwing
-```
-kubectl get csr -n kube-system
-```
+The chart can be found in this repo and can also be consumed from the resources page using
 
-This will produce a list as below
-```
-NAME                                                       AGE       REQUESTOR                                   CONDITION
-imagenamemutatingcontroller-6654d46b67-7dplz-kube-system   57m       system:serviceaccount:kube-system:default   Approved,Issued
-imagenamemutatingcontroller-6654d46b67-8rk59-kube-system   55m       system:serviceaccount:kube-system:default   Approved,Issued
-imagenamemutatingcontroller-8597f5b994-8z2m9-kube-system   32m       system:serviceaccount:kube-system:default   Approved,Issued
-imagenamemutatingcontroller-8597f5b994-jxnl8-kube-system   11m       system:serviceaccount:kube-system:default   Pending
-imagenamemutatingcontroller-8597f5b994-rflqz-kube-system   53m       system:serviceaccount:kube-system:default   Approved,Issued
+```bash
+helm install <url of release> --name registry-rewiter --set containerRegistryUrl=someurl.com,caBundle=<rootbundleasbase64>
 ```
 
-Approve the pending certificate with the command line below
+Once installed you run `k apply -f ./kubernetes/testdep.yaml` to test it has worked. If all is working you should receive
 
 ```
-kubectl certificate approve <csr-name>
-```
-
-You will need to get the root client ca file for your cluster using the command below and put this in to csBundle in `kuebrnetes/k8s.yaml`
-
-```
-kubectl get configmap -n kube-system extension-apiserver-authentication -o=jsonpath='{.data.client-ca-file}' | base64 | tr -d '\n'
+deployment.apps/example-deployment configured
 ```

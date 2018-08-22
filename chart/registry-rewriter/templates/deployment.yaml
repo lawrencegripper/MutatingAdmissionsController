@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "imagenamemutatingcontroller.fullname" . }}
+  name: {{ template "registry-rewriter.fullname" . }}
   namespace: kube-system
   labels:
-    app: {{ template "imagenamemutatingcontroller.name" . }}
-    chart: {{ template "imagenamemutatingcontroller.chart" . }}
+    app: {{ template "registry-rewriter.name" . }}
+    chart: {{ template "registry-rewriter.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     mutateimagename: never
@@ -13,12 +13,12 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "imagenamemutatingcontroller.name" . }}
+      app: {{ template "registry-rewriter.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "imagenamemutatingcontroller.name" . }}
+        app: {{ template "registry-rewriter.name" . }}
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -50,7 +50,7 @@ spec:
       volumes:
       - name: tls
         secret:
-          secretName: {{ template "imagenamemutatingcontroller.fullname" . }}
+          secretName: {{ template "registry-rewriter.fullname" . }}
       - name: configmap-volume
         configMap:
-          name: {{ template "imagenamemutatingcontroller.fullname" . }}-configmap
+          name: {{ template "registry-rewriter.fullname" . }}-configmap

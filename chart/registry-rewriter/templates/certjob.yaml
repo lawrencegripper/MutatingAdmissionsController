@@ -1,11 +1,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "imagenamemutatingcontroller.fullname" . }}
+  name: {{ template "registry-rewriter.fullname" . }}
   namespace: kube-system
   labels:
-    app: {{ template "imagenamemutatingcontroller.name" . }}
-    chart: {{ template "imagenamemutatingcontroller.chart" . }}
+    app: {{ template "registry-rewriter.name" . }}
+    chart: {{ template "registry-rewriter.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
@@ -43,11 +43,11 @@ spec:
             while [[ $# -gt 0 ]]; do
                 case ${1} in
                     --service)
-                        service="{{ template "imagenamemutatingcontroller.fullname" . }}-service"
+                        service="{{ template "registry-rewriter.fullname" . }}-service"
                         shift
                         ;;
                     --secret)
-                        secret="{{ template "imagenamemutatingcontroller.fullname" . }}"
+                        secret="{{ template "registry-rewriter.fullname" . }}"
                         shift
                         ;;
                     --namespace)
@@ -61,8 +61,8 @@ spec:
                 shift
             done
 
-            [ -z ${service} ] && service={{ template "imagenamemutatingcontroller.fullname" . }}-service
-            [ -z ${secret} ] && secret={{ template "imagenamemutatingcontroller.fullname" . }}
+            [ -z ${service} ] && service={{ template "registry-rewriter.fullname" . }}-service
+            [ -z ${secret} ] && secret={{ template "registry-rewriter.fullname" . }}
             [ -z ${namespace} ] && namespace=kube-system
 
             if [ ! -x "$(command -v openssl)" ]; then

@@ -1,20 +1,20 @@
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: {{ template "imagenamemutatingcontroller.fullname" . }}
+  name: {{ template "registry-rewriter.fullname" . }}
   labels:
-    app: {{ template "imagenamemutatingcontroller.name" . }}
-    chart: {{ template "imagenamemutatingcontroller.chart" . }}
+    app: {{ template "registry-rewriter.name" . }}
+    chart: {{ template "registry-rewriter.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 webhooks:
 - clientConfig:
     service:
       namespace: kube-system
-      name: {{ template "imagenamemutatingcontroller.fullname" . }}-service
+      name: {{ template "registry-rewriter.fullname" . }}-service
     caBundle: {{ .Values.caBundle }}
   failurePolicy: Fail
-  name: {{ template "imagenamemutatingcontroller.fullname" . }}-service.kube-system.svc
+  name: {{ template "registry-rewriter.fullname" . }}-service.kube-system.svc
   namespaceSelector:
     matchExpressions:
       - key: mutateimagename
