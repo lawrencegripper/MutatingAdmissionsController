@@ -18,9 +18,10 @@ deploy:
        secure: "GE/7XvYvdaZ1XrP6NJeQhcMKmcoi2vECdf8MU3GRfEShOe5GiIErzkc1hjsS5uFDRNdOicqb9aX8NJq/0aKXP16BLg2rIf/43I+aiJw2SLoj2Btn8qToGdmp/RluGCUo2UCXua97mf9blDLNc3FSickiQqDwma6gXbTyh7D05XUPLFfSHp/3pIYkCLa73SjVP8EGcDD302+tgMuW4CLs1Al9rpDnHQD2l07TI22toY9aWIbSsGCCYa8vEp0InS15LcIYWDgxe3pe1w4PmCUgexrGvHN+EVNWmznu9pHFvl5arozoABwrxITDUKgXk6xxhBL0Nf0N9w5Lu+1boohzHA3xqOARnkwWn0s0FoFPm3O/BHKAj+q6c+MwbGSl7pSPEA2irnzA06iQZHmq+KOYfOObk56N0Jc9GOUdd9wEmsU/xjt5i5ApoWmMXAJJb8Bymv9ObyjVnwmrXiPS+KRErdIJAAIYeg6ihjyP6x1gVYxkk2GAvEcTZbvjZMOPjBX5JhXHjA7KUGa3W+fSc5PrSCD4s+OzIZft+q6dWcw3/G+b6U87+UxK4l2Ryi4AP/vxFZbJPfxPC7+kKVRvuHRQGiGnwgARN6FEnwO1/oxSjsUZtxQUzHmcn4VMPoBuIhQR/Mz4C+FR626T+cpzGv19lvZW4A2FDZ8s03BCP9nfFe4="
     file_glob: true
     file: registry-rewriter-*.tgz
+    skip_cleanup: true
     on:
-      repo: lawrencegripper/MutatingAdmissionsController
       branch: master
+      tags: true
 
 env:
   global:
