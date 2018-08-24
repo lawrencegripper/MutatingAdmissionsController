@@ -47,6 +47,8 @@ spec:
         env:
           - name: REWRITE_CONTAINER_REPOSITORY
             value: {{ .Values.containerRegistryUrl }}
+          - name: IMAGE_PULL_SECRET_NAME
+            value: {{ .Values.imagePullSecretName }}
       volumes:
       - name: tls
         secret:
