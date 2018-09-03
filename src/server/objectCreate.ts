@@ -24,10 +24,17 @@ export function objectCreate(ctx: KoaRouter.IRouterContext) {
     };
 
     switch (admissionRequest.request.kind.kind) {
-        case "Deployment": {
+        case "Deployment": {     
+            var imageRewritten = false;
+
             (objectClone as Kubernetes.Deployment).spec.template.spec.containers.forEach(container => {
-                updateImageNameForContainer(container);
+                imageRewritten = imageRewritten || updateImageNameForContainer(container);
             });
+
+            if (config.imagePullSecretName && imageRewritten) {
+              objectClone.spec.template.spec.imagePullSecrets = [{name: config.imagePullSecretName}];
+            }
+
             break;
         }
         default: {
@@ -50,7 +57,10 @@ export function objectCreate(ctx: KoaRouter.IRouterContext) {
 }
 
 function updateImageNameForContainer(container: Kubernetes.Container) {
-    if (container.image.startsWith(localRepoPrefix)) {
+  var rewriteImage = container.image.startsWith(localRepoPrefix);
+
+    if (rewriteImage) {
         container.image = container.image.replace(localRepoPrefix, config.rewriteContainerRepository);
     }
+    return rewriteImage;
 }
