@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.com/lawrencegripper/MutatingAdmissionsController.svg?branch=master)](https://travis-ci.com/lawrencegripper/MutatingAdmissionsController)
 
-## Status: WIP
+## Status: Alpha
 
-This controller will rewrite pods run to Kuberentes with an image repository location of `cluster.local/someimage` to a repository local to the cluster (in the sample it's `rewritten.local/someimage`).
+This controller will rewrite deployments in Kuberentes with an image repository location of `cluster.local/someimage` to a repository local to the cluster (in the sample it's `rewritten.local/someimage`) and inject the correct image pull secret. The aim is to simplify deployment in a HA environment with multiple k8s clusters in multiple providers, each with seperate image repositories. 
 
-This is a task better suited to some form of pre-processing in the CD pipeline as I beleive using an Admissions controller for this is overly complex and adds a single point of failure for all pod create opterations in your clusters. However, I think the sample is likely of use to others with different scenarios. 
+This is a task that could be performed by a CD pipeline and careful thought should be used around how this affects clusters if the webhook service isn't available. Currently the solution mutates deployments meaning that pods can be created successfully when the serivce is down allowing the cluster to recover from node failure - however no deployments could be created or updated during this time. 
 
 ## Running
 
