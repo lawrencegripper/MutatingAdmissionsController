@@ -12,5 +12,5 @@ metadata:
 rules:
 - apiGroups: ["certificates.k8s.io"]
   resources: ["certificatesigningrequests"]
-  verbs: ["create"]
+  verbs: ["create","get","delete","list","update","patch"]
 {{- end -}}
