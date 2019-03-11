@@ -4,13 +4,24 @@ replicaCount: 2
 # This needs to be the CA Root of your cluster encoded in base64
 # you can get this by running the following command
 # kubectl get configmap -n kube-system extension-apiserver-authentication -o=jsonpath='{.data.client-ca-file}' | base64 | tr -d '\n'
-caBundle: 
+caBundle:
 
 # This is the url of the registry that you wish your cluster.local images to be pulled from.
 # If you specified scott.com it woudl re-write cluster.local/some/image to scott.com/some/image
-containerRegistryUrl: 
+containerRegistryUrl:
 
 # The name of the image pull secret to be used for the repository
-imagePullSecretName: 
+imagePullSecretName:
 
 webhookImage: lawrencegripper/imagenamemutatingcontroller:12
+
+## For Kubernetes RBAC support:
+##
+rbac:
+  ## Enable the creation of RBAC resources.
+  ##
+  create: true
+
+  ## RBAC Version
+  ##
+  apiVersion: v1beta1

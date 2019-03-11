@@ -1,0 +1,16 @@
+{{- if .Values.rbac.create -}}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/{{ .Values.rbac.apiVersion }}
+metadata:
+  name: {{ template "registry-rewriter.fullname" . }}
+  namespace: kube-system
+  labels:
+    app: {{ template "registry-rewriter.name" . }}
+    chart: {{ template "registry-rewriter.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+rules:
+- apiGroups: ["certificates.k8s.io"]
+  resources: ["certificatesigningrequests"]
+  verbs: ["create"]
+{{- end -}}
