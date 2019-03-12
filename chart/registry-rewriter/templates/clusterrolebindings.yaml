@@ -15,5 +15,5 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   namespace: kube-system
-  name: {{ template "registry-rewriter.fullname" . }}
+  name: {{ .Values.serviceAccount.name }}
 {{- end -}}

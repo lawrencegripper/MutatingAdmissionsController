@@ -21,7 +21,7 @@ spec:
           - |
             #!/bin/bash
 
-            set -e
+            set -ex
 
             usage() {
                 cat <<EOF
