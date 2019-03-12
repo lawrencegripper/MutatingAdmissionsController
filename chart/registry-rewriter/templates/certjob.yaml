@@ -14,7 +14,7 @@ spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       containers:
       - name: pi
-        image: pivotalservices/pks-kubectl:1.2.0-Beta-1
+        image: pivotalservices/pks-kubectl:1.3.3
         command: ["/bin/bash"]
         args:
           - "-c"
