@@ -21,9 +21,7 @@ spec:
         app: {{ template "registry-rewriter.name" . }}
         release: {{ .Release.Name }}
     spec:
-      {{ if .Values.rbac.create }}
-      serviceAccountName: {{ template "registry-rewriter.fullname" . }}
-      {{ end }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
       containers:
       - name: nginxhttps
         image: library/nginx:1.15

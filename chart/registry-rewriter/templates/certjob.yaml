@@ -11,9 +11,7 @@ metadata:
 spec:
   template:
     spec:
-      {{ if .Values.rbac.create }}
-      serviceAccountName: {{ template "registry-rewriter.fullname" . }}
-      {{ end }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
       containers:
       - name: pi
         image: pivotalservices/pks-kubectl:1.2.0-Beta-1
