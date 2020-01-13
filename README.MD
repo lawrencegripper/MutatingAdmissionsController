@@ -1,5 +1,7 @@
 # Image Repository Mutating Admission Controller
 
+## Warning: No longer maintained. Use as a sample with caution. 
+
 [![Build Status](https://travis-ci.com/lawrencegripper/MutatingAdmissionsController.svg?branch=master)](https://travis-ci.com/lawrencegripper/MutatingAdmissionsController)
 
 ## Status: Alpha
